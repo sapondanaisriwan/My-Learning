@@ -19,28 +19,41 @@
 
 import os
 import discord
+from discord import channel
 from dotenv import load_dotenv
 from discord.ext import commands
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
-client = commands.Bot(command_prefix = '!')
+client = commands.Bot(command_prefix = '.')
 
 @client.event
 async def on_ready():
     print('Bot is ready')
 
-@client.event
-async def on_message(message):
-    author = message.author
-    content = message.content
-    print(f"{author} {content}")
 
 @client.event
+async def on_message(message):
+    client = message.channel
+    print(type(message))
+    if message.content.startswith('.ping'):
+        await client.send('pong')
+
+    if message.content.startswith('.echo'):
+        msg = message.content.split() # ['.echo', 'hello', 'world', 'barrier']
+        msg = msg[1:] # ['hello', 'world', 'barrier']
+        output = ''
+        for word  in msg:
+            output += word
+            output += ' '
+        await client.send(output)
+
+# detect deleted message
+@client.event
 async def on_message_delete(message):
-    author = message.author
     content = message.content
     await message.channel.send(content)
+
 
 client.run(TOKEN)
 
