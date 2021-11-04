@@ -24,28 +24,51 @@ from discord.ext import commands
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
-intents = discord.Intents.default()
-intents.members = True
-
-client = commands.Bot(command_prefix='.', intents=intents)
+intents = discord.Intents.all()
+PREFIX = "!!"
+bot = commands.Bot(command_prefix=PREFIX, intents=intents, )
 
 
 """
-CLIENT EVENT
+Catch error message
 """
 
-@client.event
+@bot.event
+async def on_command_error(ctx, error):
+
+    if isinstance(error, commands.CommandNotFound):
+        return
+
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send(f"Missing a required argument.")
+
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("You do not have the permissions to run this command.")
+    
+    if isinstance(error, commands.BotMissingPermissions):
+        await ctx.send("I don't have sufficient permissions!")
+
+
+"""
+bot EVENT
+"""
+
+@bot.event
 async def on_ready():
     print('Bot is ready')
 
-@client.event
+
+@bot.event
 async def on_message(message):
-    print(message.content)
+
     if message.author.bot:
         return
+    
+    await bot.process_commands(message)
+    
 
 # detect deleted message
-@client.event
+@bot.event
 async def on_message_delete(message):
 
     if message.author.bot:
@@ -55,22 +78,38 @@ async def on_message_delete(message):
         await message.channel.send(message.content)
 
 
-@client.event
+@bot.event
 async def on_member_join(member):
     print(f'{member} has joined the server.')
 
 
-@client.event
+@bot.event
 async def on_member_remove(member):
     print(f'{member} has left the server.')
 
-@client.command()
+
+@bot.command()
 async def clear(ctx, amount=5):
 
     if ctx.author.bot:
         return
 
-    await ctx.channel.purge(limit=amount+1)
+    await ctx.channel.purge(limit = amount + 1)
 
-client.run(TOKEN)
+
+@bot.command()
+@commands.has_permissions(kick_members = True)
+async def kick(ctx, member: discord.Member, *, reason = None):
+    await member.kick(reason = reason)
+    await ctx.send(f'User {member} has been kick')
+
+
+@bot.command()
+@commands.has_permissions(ban_members = True)
+async def ban(ctx, member: discord.Member, *, reason = None):
+    await member.ban(reason = reason)
+    await ctx.send(f'User {member} has been banned')
+
+
+bot.run(TOKEN)
 
