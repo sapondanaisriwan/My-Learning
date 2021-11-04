@@ -27,7 +27,7 @@ TOKEN = os.getenv('TOKEN')
 intents = discord.Intents.default()
 intents.members = True
 
-client = commands.Bot(command_prefix='!', intents=intents)
+client = commands.Bot(command_prefix='.', intents=intents)
 
 
 """
@@ -38,26 +38,21 @@ CLIENT EVENT
 async def on_ready():
     print('Bot is ready')
 
-# @client.event
-# async def on_message(message):
-#     client = message.channel
-#     if message.content.startswith('.ping'):
-#         await client.send('pong')
-
-#     if message.content.startswith('.echo'):
-#         msg = message.content.split() # ['.echo', 'hello', 'world', 'barrier']
-#         msg = msg[1:] # ['hello', 'world', 'barrier']
-#         output = ''
-#         for word  in msg:
-#             output += word
-#             output += ' '
-#         await client.send(output)
+@client.event
+async def on_message(message):
+    print(message.content)
+    if message.author.bot:
+        return
 
 # detect deleted message
 @client.event
 async def on_message_delete(message):
-    content = message.content
-    await message.channel.send(content)
+
+    if message.author.bot:
+        return
+
+    if message.content: # to ignore the error if user send an image
+        await message.channel.send(message.content)
 
 
 @client.event
@@ -69,17 +64,13 @@ async def on_member_join(member):
 async def on_member_remove(member):
     print(f'{member} has left the server.')
 
-# @client.command(aliases=['clear'])
-# async def clear(ctx, amount = 100):
-    # print('here')
-    # channel = ctx.message.channel
-    # messages = []
-    # async for message in client.logs_form(channel, limit=int(amount)):
-    #     print(message)
-    #     messages.append(message)
-    # await client.delete_messasge(messages)
-    # await channel.send('test')
+@client.command()
+async def clear(ctx, amount=5):
 
+    if ctx.author.bot:
+        return
+
+    await ctx.channel.purge(limit=amount+1)
 
 client.run(TOKEN)
 
