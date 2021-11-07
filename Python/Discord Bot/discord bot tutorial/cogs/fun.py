@@ -10,7 +10,7 @@ class Fun_Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name= 'Penis size' ,aliases=['pp','ppsize', 'penissize'])
+    @commands.command(name= 'ppsize' ,aliases=['pp', 'penissize'])
     async def _pennis_size(self, ctx, member: discord.Member):
 
         if member.bot or ctx.author.bot:
@@ -42,7 +42,6 @@ class Fun_Commands(commands.Cog):
         embed.set_footer(text = f"ID - {member.avatar}")
 
         await ctx.send(embed=embed)
-
 
 
 def setup(bot):

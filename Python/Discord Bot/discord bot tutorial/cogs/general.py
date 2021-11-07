@@ -1,15 +1,57 @@
 import io
-
+from datetime import datetime
 import discord
 import qrcode
 from discord.ext import commands
 from googletrans import Translator
 
-
 class General_Commands(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command()
+    async def userinfo(self, ctx, member: discord.Member):
+        roles = [role for role in member.roles]
+
+        embed = discord.Embed(
+            color = member.color,
+            timestamp = datetime.utcnow()
+        )
+        embed.set_author(
+            name = f"{member} ({member.id})",
+            icon_url = f"{member.avatar_url}"
+        )
+        embed.add_field(
+            name = "Created at:",  
+            value = member.created_at.strftime("%d %b %Y"),
+            inline = True
+        )
+        embed.add_field(
+            name = "Joined at:",
+            value = member.joined_at.strftime("%d %b %Y"),
+            inline = True
+        )
+        embed.add_field(
+            name = "Highest role:",
+            value = member.top_role.mention,
+            inline = False
+        )
+        embed.add_field(
+            name = f"Roles Obtained ({len(roles)})",
+            value = ', '.join([role.mention for role in roles][1:]),
+            inline = False
+        )
+        print(type(member.avatar_url))
+        embed.set_thumbnail(
+            url = member.avatar_url
+        )
+        embed.set_footer(
+            text = f"Requst By: {ctx.author}"
+        )
+
+
+        await ctx.send(embed=embed)
 
     @commands.command()
     async def clear(self, ctx, amount = 5):
@@ -72,6 +114,7 @@ class General_Commands(commands.Cog):
         embed.set_footer(text=f'cr.code design by : LuckyToT#1251')
 
         await ctx.send(embed=embed)
+
 
 
 

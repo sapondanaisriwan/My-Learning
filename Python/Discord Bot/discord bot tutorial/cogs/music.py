@@ -219,7 +219,6 @@ class Music_Commands(commands.Cog):
 
     """Pause music"""
 
-
     @commands.command()
     async def pause(self, ctx):
     

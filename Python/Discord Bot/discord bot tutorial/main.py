@@ -34,6 +34,7 @@ bot = commands.Bot(command_prefix=PREFIX, intents=intents)
 Catch error message
 """
 
+
 @bot.event
 async def on_command_error(ctx, error):
 
@@ -62,6 +63,7 @@ async def on_command_error(ctx, error):
 @bot.event
 async def on_ready():
     print('Bot is ready')
+    await bot.change_presence(status=discord.Status.idle, activity=discord.Game("with you mom"))
 
 @bot.command()
 async def load(ctx, extension):
@@ -84,26 +86,6 @@ if __name__ == '__main__':
         if filename.endswith('.py'):
             bot.load_extension(f'cogs.{filename[:-3]}')
 
-
-
-# @bot.event
-# async def on_message(message):
-
-#     if message.author.bot:
-#         return
-    
-#     await bot.process_commands(message)
-
-
-# # detect deleted message
-# @bot.event
-# async def on_message_delete(message):
-
-#     if message.author.bot:
-#         return
-
-#     if message.content: # to ignore the error if user send an image
-#         await message.channel.send(message.content)
 
 bot.run(TOKEN)
 
