@@ -4,7 +4,6 @@ from datetime import timedelta
 from functools import partial
 
 import discord
-from discord.ext.commands.core import command
 import youtube_dl
 from async_timeout import timeout
 from discord.ext import commands
@@ -185,12 +184,12 @@ def get_player(ctx):
     return player
 
 
-class Music_Commands(commands.Cog):
+class Music_Commands(commands.Cog, name='Music commands'):
 
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.command(name='play', aliases=['p'])
+    @commands.command(name='play', aliases=['p'], help='Plays an audio resource right in your voice channel.')
     async def _play(self, ctx, *, search: str):  # ctx = คนใช้คำสั่ง/ผู้ใช้
 
         channel = ctx.author.voice.channel
@@ -219,7 +218,7 @@ class Music_Commands(commands.Cog):
 
     """Pause music"""
 
-    @commands.command()
+    @commands.command(help='Pauses the music playback if playing')
     async def pause(self, ctx):
     
         voice_client = get(self.bot.voice_clients, guild=ctx.guild)
@@ -248,7 +247,7 @@ class Music_Commands(commands.Cog):
         voice_client.pause()
 
 
-    @commands.command()
+    @commands.command(help='Resumes the music playback if paused')
     async def resume(self, ctx):
         
         emBed = discord.Embed(color=0xff0000)
@@ -309,7 +308,7 @@ class Music_Commands(commands.Cog):
             await ctx.message.add_reaction('👌')
 
 
-    @commands.command(name='queue', aliases=['q'])
+    @commands.command(name='queue', aliases=['q'], help='Shows the queued songs in this server')
     async def _queueList(self, ctx):
 
         voice_client = get(self.bot.voice_clients, guild=ctx.guild)
@@ -351,7 +350,7 @@ class Music_Commands(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @commands.command(name='skip', aliases=['s'])
+    @commands.command(name='skip', aliases=['s'], help='Skips the current playing song in track or skips the number of songs you specified in track.')
     async def _skip(self, ctx):
 
         voice_client = get(self.bot.voice_clients, guild=ctx.guild)

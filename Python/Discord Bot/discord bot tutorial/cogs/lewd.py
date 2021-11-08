@@ -6,12 +6,13 @@ from waifu import WaifuAioClient
 
 waifu = WaifuAioClient()
 
-class Lewd_Commands(commands.Cog):
+class Lewd_Commands(commands.Cog, name='Lewd commands'):
 
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(help="Grabs a randomized lewdwaifu image/gif")
+    @commands.is_nsfw()
     async def lewdwaifu(self, ctx):
         nsfw_lewdwaifu = await waifu.nsfw(category='waifu')
 
@@ -25,7 +26,8 @@ class Lewd_Commands(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(help="Grabs a randomized lewdneko image/gif")
+    @commands.is_nsfw()
     async def lewdneko(self, ctx):
         nsfw_neko = await waifu.nsfw(category='neko')
 
@@ -39,7 +41,8 @@ class Lewd_Commands(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(help="Grabs a randomized blowjob image/gif")
+    @commands.is_nsfw()
     async def blowjob(self, ctx):
         nsfw_blowjob = await waifu.nsfw(category='blowjob')
 
@@ -53,7 +56,8 @@ class Lewd_Commands(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(help="Grabs a randomized Trap image/gif")
+    @commands.is_nsfw()
     async def trap(self, ctx):
         nsfw_trap = await waifu.nsfw(category='trap')
 

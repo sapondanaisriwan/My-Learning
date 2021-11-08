@@ -2,7 +2,7 @@ from datetime import datetime
 import discord
 from discord.ext import commands
 
-class Admin_Commands(commands.Cog):
+class AdminCommand(commands.Cog, name='Admin commands'):
 
     def __init__(self, bot):
         self.bot = bot
@@ -34,7 +34,7 @@ class Admin_Commands(commands.Cog):
         await channel.send(embed=embed)
 
 
-    @commands.command()
+    @commands.command(help="Change member's name that you mention")
     @commands.has_permissions(manage_nicknames = True)
     async def nick(self, ctx, member: discord.Member, *, nickname):
 
@@ -49,7 +49,7 @@ class Admin_Commands(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @commands.command(aliases=['rsnick'])
+    @commands.command(name='resetnick', aliases=['rsnick'], help="Resets member's name that you mention")
     @commands.has_permissions(manage_nicknames = True)
     async def reset_nick(self, ctx, member: discord.Member):
 
@@ -64,8 +64,7 @@ class Admin_Commands(commands.Cog):
         await ctx.send(embed=embed)
 
 
-
-    @commands.command()
+    @commands.command(help='Kicks the user you specified out of your server.')
     @commands.has_permissions(kick_members = True)
     async def kick(self, ctx, member: discord.Member, *, reason = None):
 
@@ -76,7 +75,7 @@ class Admin_Commands(commands.Cog):
         await ctx.send(f'User {member} has been kick')
 
 
-    @commands.command()
+    @commands.command(help='Bans the user you specified out of your server.')
     @commands.has_permissions(ban_members = True)
     async def ban(self, ctx, member: discord.Member, *, reason = None):
 
@@ -87,7 +86,7 @@ class Admin_Commands(commands.Cog):
         await ctx.send(f'User {member.mention} has been banned')
 
 
-    @commands.command()
+    @commands.command(help='Unbans the user you provided from in this server')
     @commands.has_permissions(ban_members = True)
     async def unban(self, ctx, *, member):
 
@@ -114,4 +113,4 @@ class Admin_Commands(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(Admin_Commands(bot))
+    bot.add_cog(AdminCommand(bot))

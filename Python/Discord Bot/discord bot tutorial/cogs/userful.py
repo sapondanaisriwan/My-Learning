@@ -1,16 +1,65 @@
 import io
 from datetime import datetime
+
 import discord
 import qrcode
 from discord.ext import commands
 from googletrans import Translator
 
-class General_Commands(commands.Cog):
+
+class Userful(commands.Cog, name='Useful commands'):
 
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(name='serverinfo' ,aliases=['guildinfo'], help='Gets the info of the server where this command is invoked.')
+    @commands.has_permissions(manage_guild = True)
+    async def server_info(self, ctx):
+        guild = ctx.guild
+
+        embed=discord.Embed(
+            title = ":gear: Server Information",
+            timestamp = datetime.utcnow()
+        )
+        embed.set_thumbnail(url=guild.icon_url)
+        embed.add_field(
+            name = "Server Name",
+            value = f'```{guild.name}```',
+            inline = True
+        )
+        embed.add_field(
+            name = "Created at",
+            value = f'```{guild.created_at.strftime("%d %b %Y")}```',
+            inline = True
+        )
+        embed.add_field(
+            name = "Owner",
+            value = f'```{guild.owner}```',
+            inline = True
+        )
+        embed.add_field(
+            name = "All Members",
+            value = f'```{guild.member_count}```',
+            inline = True
+        )
+        embed.add_field(
+            name = "All Channels",
+            value = f'```{len(guild.channels)}```',
+            inline = True
+        )
+        embed.add_field(
+            name = "All Roles",
+            value = f'```{len(guild.roles)}```',
+            inline = True
+        )
+        embed.set_footer(
+            text = f"Requsted By: {ctx.author}",
+            icon_url = ctx.author.avatar_url
+        )
+        await ctx.send(embed=embed)
+
+
+    @commands.command(help='Gets the info of the user that you mention')
     async def userinfo(self, ctx, member: discord.Member):
         roles = [role for role in member.roles]
 
@@ -42,27 +91,29 @@ class General_Commands(commands.Cog):
             value = ', '.join([role.mention for role in roles][1:]),
             inline = False
         )
-        print(type(member.avatar_url))
+
         embed.set_thumbnail(
             url = member.avatar_url
         )
         embed.set_footer(
-            text = f"Requst By: {ctx.author}"
+            text = f"Requsted By: {ctx.author}",
+            icon_url = ctx.author.avatar_url
         )
 
 
         await ctx.send(embed=embed)
 
-    @commands.command()
-    async def clear(self, ctx, amount = 5):
+    @commands.command(help='Let you clear the messages')
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def clear(self, ctx, amount: int):
 
         if ctx.author.bot:
             return
 
         await ctx.channel.purge(limit = amount + 1)
 
-    @commands.command(name='change')
-    async def _changeLanguage(self, ctx, *, message):
+    @commands.command(name='change', help='Convert message written in ENG to TH.')
+    async def change_Language(self, ctx, *, message):
 
         if ctx.author.bot:
             return
@@ -78,8 +129,8 @@ class General_Commands(commands.Cog):
         await ctx.channel.send(message)
 
 
-    @commands.command(name = 'qrocde', aliases=['qr'])
-    async def _qrcode(self, ctx, *, url):
+    @commands.command(aliases=['qr'], help='Generator qrcode.')
+    async def qrcode(self, ctx, *, url):
         try:
             q = qrcode.make(url)
             arr = io.BytesIO()
@@ -90,8 +141,8 @@ class General_Commands(commands.Cog):
             await ctx.send('Please send url only')
 
 
-    @commands.command(name = 'translate', aliases=['t', 'tsl'])
-    async def _translate(self, ctx, *, message):
+    @commands.command(aliases=['t', 'tsl'], help='Translate to Thai')
+    async def translate(self, ctx, *, message):
 
         translator = Translator()
         result = translator.translate(message, dest='th').text
@@ -119,4 +170,4 @@ class General_Commands(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(General_Commands(bot))
+    bot.add_cog(Userful(bot))

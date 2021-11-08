@@ -5,13 +5,13 @@ import discord
 from discord.ext import commands
 
 
-class Fun_Commands(commands.Cog):
+class FunCommand(commands.Cog, name='Fun commands'):
 
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name= 'ppsize' ,aliases=['pp', 'penissize'])
-    async def _pennis_size(self, ctx, member: discord.Member):
+    @commands.command(name= 'ppsize' ,aliases=['pp', 'penissize'], help='คำนวณขนาดหำของผู้ใช้')
+    async def pennis_size(self, ctx, member: discord.Member):
 
         if member.bot or ctx.author.bot:
             return
@@ -28,7 +28,7 @@ class Fun_Commands(commands.Cog):
         await ctx.send(embed=embed)
 
 
-    @commands.command()
+    @commands.command(help='คำนวณความเป็นเกย์ของผู้ใช้')
     async def gay(self, ctx, member: discord.Member):
 
         if member.bot or ctx.author.bot:
@@ -43,6 +43,5 @@ class Fun_Commands(commands.Cog):
 
         await ctx.send(embed=embed)
 
-
 def setup(bot):
-    bot.add_cog(Fun_Commands(bot))
+    bot.add_cog(FunCommand(bot))

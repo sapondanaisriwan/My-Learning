@@ -6,12 +6,13 @@ from waifu import WaifuAioClient
 
 waifu = WaifuAioClient()
 
-class Action_Commands(commands.Cog):
+
+class ActionCommand(commands.Cog, name='Action commands'):
 
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(help="Grabs a randomized waifu image/gif")
     async def waifu(self, ctx):
         sfw_waifu = await waifu.sfw(category='waifu')
 
@@ -25,7 +26,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(help="Grabs a randomized neko image/gif")
     async def neko(self, ctx):
         sfw_neko = await waifu.sfw(category='neko')
 
@@ -39,7 +40,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(help="Grabs a randomized shinobu image/gif")
     async def shinobu(self, ctx):
         sfw_shinobu = await waifu.sfw(category='shinobu')
 
@@ -53,7 +54,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(help="Grabs a randomized megumin image/gif")
     async def megumin(self, ctx):
         sfw_megumin = await waifu.sfw(category='megumin')
 
@@ -67,7 +68,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(help="Grabs a randomized bully image/gif")
     async def bully(self, ctx):
         sfw_bully = await waifu.sfw(category='bully')
 
@@ -81,7 +82,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(help="Grabs a randomized cuddle image/gif")
     async def cuddle(self, ctx):
         sfw_cuddle = await waifu.sfw(category='cuddle')
 
@@ -95,7 +96,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(help="Grabs a randomized cry image/gif")
     async def cry(self, ctx):
         sfw_cry = await waifu.sfw(category='cry')
 
@@ -108,7 +109,8 @@ class Action_Commands(commands.Cog):
         embed.timestamp = datetime.utcnow()
 
         await ctx.send(embed=embed)
-    @commands.command()
+    
+    @commands.command(help="Grabs a randomized hug image/gif")
     async def hug(self, ctx):
         sfw_hug = await waifu.sfw(category='hug')
 
@@ -122,7 +124,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(help="Grabs a randomized awoo image/gif")
     async def awoo(self, ctx):
         sfw_awoo = await waifu.sfw(category='awoo')
 
@@ -136,7 +138,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized kiss image/gif")
     async def kiss(self, ctx):
         sfw_kiss = await waifu.sfw(category='kiss')
 
@@ -150,7 +152,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized lick image/gif")
     async def lick(self, ctx):
         sfw_lick = await waifu.sfw(category='lick')
 
@@ -164,7 +166,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized pat image/gif")
     async def pat(self, ctx):
         sfw_pat = await waifu.sfw(category='pat')
 
@@ -178,7 +180,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized smug image/gif")
     async def smug(self, ctx):
         sfw_smug = await waifu.sfw(category='smug')
 
@@ -192,7 +194,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized bonk image/gif")
     async def bonk(self, ctx):
         sfw_bonk = await waifu.sfw(category='bonk')
 
@@ -206,7 +208,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized yeet image/gif")
     async def yeet(self, ctx):
         sfw_yeet = await waifu.sfw(category='yeet')
 
@@ -220,7 +222,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized blush image/gif")
     async def blush(self, ctx):
         sfw_blush = await waifu.sfw(category='blush')
 
@@ -234,7 +236,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized smile image/gif")
     async def smile(self, ctx):
         sfw_smile = await waifu.sfw(category='smile')
 
@@ -248,7 +250,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized wave image/gif")
     async def wave(self, ctx):
         sfw_wave = await waifu.sfw(category='wave')
 
@@ -262,7 +264,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized highfive image/gif")
     async def highfive(self, ctx):
         sfw_highfive = await waifu.sfw(category='highfive')
 
@@ -276,7 +278,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized handhold image/gif")
     async def handhold(self, ctx):
         sfw_handhold = await waifu.sfw(category='handhold')
 
@@ -290,7 +292,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized nom image/gif")
     async def nom(self, ctx):
         sfw_nom = await waifu.sfw(category='nom')
 
@@ -304,7 +306,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized bite image/gif")
     async def bite(self, ctx):
         sfw_bite = await waifu.sfw(category='bite')
 
@@ -318,7 +320,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized glomp image/gif")
     async def glomp(self, ctx):
         sfw_glomp = await waifu.sfw(category='glomp')
 
@@ -332,7 +334,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized slap image/gif")
     async def slap(self, ctx):
         sfw_slap = await waifu.sfw(category='slap')
 
@@ -346,7 +348,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized kill image/gif")
     async def kill(self, ctx):
         sfw_kill = await waifu.sfw(category='kill')
 
@@ -360,7 +362,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)     
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized happy image/gif")
     async def happy(self, ctx):
         sfw_happy = await waifu.sfw(category='happy')
 
@@ -374,7 +376,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized wink image/gif")
     async def wink(self, ctx):
         sfw_wink = await waifu.sfw(category='wink')
 
@@ -388,21 +390,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
-    async def wink(self, ctx):
-        sfw_wink = await waifu.sfw(category='wink')
-
-        embed = discord.Embed(color=discord.Color.red())
-        embed.set_image(url=sfw_wink)
-        embed.set_footer(
-            text = f'{ctx.author}',
-            icon_url = f"{ctx.author.avatar_url}"
-        )
-        embed.timestamp = datetime.utcnow()
-
-        await ctx.send(embed=embed)    
-    
-    @commands.command()
+    @commands.command(help="Grabs a randomized poke image/gif")
     async def poke(self, ctx):
         sfw_poke = await waifu.sfw(category='poke')
 
@@ -416,7 +404,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)    
     
-    @commands.command()
+    @commands.command(help="Grabs a randomized dance image/gif")
     async def dance(self, ctx):
         sfw_dance = await waifu.sfw(category='dance')
 
@@ -430,7 +418,7 @@ class Action_Commands(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(help="Grabs a randomized cringe image/gif")
     async def cringe(self, ctx):
         sfw_cringe = await waifu.sfw(category='cringe')
 
@@ -446,4 +434,5 @@ class Action_Commands(commands.Cog):
     
 
 def setup(bot):
-    bot.add_cog(Action_Commands(bot))
+
+    bot.add_cog(ActionCommand(bot))
