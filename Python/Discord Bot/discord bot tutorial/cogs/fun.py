@@ -10,6 +10,7 @@ class FunCommand(commands.Cog, name='Fun commands'):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command(name= 'ppsize' ,aliases=['pp', 'penissize'], help='คำนวณขนาดหำของผู้ใช้')
     async def pennis_size(self, ctx, member: discord.Member):
 
@@ -27,7 +28,7 @@ class FunCommand(commands.Cog, name='Fun commands'):
 
         await ctx.send(embed=embed)
 
-
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command(help='คำนวณความเป็นเกย์ของผู้ใช้')
     async def gay(self, ctx, member: discord.Member):
 

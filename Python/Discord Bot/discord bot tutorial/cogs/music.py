@@ -166,9 +166,12 @@ class MusicPlayer:
 
     async def destroy(self, guild):
         """Disconnect and cleanup the player."""
-        del players[self._guild]
-        await self._guild.voice_client.disconnect()
-        return self.bot.loop.create_task(self._cog.cleanup(guild))
+        try:
+            del players[self._guild]
+            await self._guild.voice_client.disconnect()
+            return self.bot.loop.create_task(self._cog.cleanup(guild))
+        except:
+            print('error')
 
 
 

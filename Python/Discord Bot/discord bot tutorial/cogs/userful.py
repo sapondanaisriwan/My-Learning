@@ -128,6 +128,10 @@ class Userful(commands.Cog, name='Useful commands'):
             message = message.replace(wordEN, wordTH)
         await ctx.channel.send(message)
 
+    @commands.command()
+    async def botinfo(self, ctx):
+        await ctx.send(self.bot.appinfo.owner)
+
 
     @commands.command(aliases=['qr'], help='Generator qrcode.')
     async def qrcode(self, ctx, *, url):
