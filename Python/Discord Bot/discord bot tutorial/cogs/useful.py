@@ -136,13 +136,13 @@ class Userful(commands.Cog, name='Useful commands'):
     @commands.command(aliases=['qr'], help='Generator qrcode.')
     async def qrcode(self, ctx, *, url):
         try:
-            q = qrcode.make(url)
-            arr = io.BytesIO()
-            q.save(arr, format="PNG")
-            arr.seek(0)
+            arr = io.BytesIO() # กำหนดใหเ้ตัวแปร f แทน BytesIO เป็นค่าว่าง
+            q = qrcode.make(url) # เวลาเรียกใช้งาน StringIO ใน Python สามารถใช้งานได้เหมือนไฟล์ที่ดึงเข้ามาใน Python ครับ
+            q.save(arr, format="PNG")  #บันทึกค่า QR Code เข้าไปยังไฟล์โดยรูปแบบไฟล์ PNG
+            arr.seek(0) #set ค่าให้เริ่มที่ 0 
             await ctx.send(file=discord.File(fp=arr, filename="image.png"))
         except:
-            await ctx.send('Please send url only')
+            ctx.send('error ☠️')
 
 
     @commands.command(aliases=['t', 'tsl'], help='Translate to Thai')

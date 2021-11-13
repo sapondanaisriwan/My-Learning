@@ -1,9 +1,10 @@
 from datetime import datetime
 
 import discord
+from discord import message
 from discord.ext import commands
 from waifu import WaifuAioClient
-
+import io
 waifu = WaifuAioClient()
 
 
@@ -11,6 +12,12 @@ class ActionCommand(commands.Cog, name='Action commands'):
 
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command()
+    async def say(self, ctx, *, message):
+        test = io.BytesIO(message)
+        # print(test)
+        # await ctx.send(message)
 
     @commands.command(help="Grabs a randomized waifu image/gif")
     async def waifu(self, ctx):
