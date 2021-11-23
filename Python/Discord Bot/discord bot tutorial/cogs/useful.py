@@ -1,7 +1,9 @@
 import io
 from datetime import datetime
+from logging import error
 
 import discord
+import pyshorteners
 import qrcode
 from discord.ext import commands
 from googletrans import Translator
@@ -126,23 +128,23 @@ class Userful(commands.Cog, name='Useful commands'):
     
         for wordEN, wordTH in dic3.items():
             message = message.replace(wordEN, wordTH)
-        await ctx.channel.send(message)
+        await ctx.reply(message)
 
     @commands.command()
     async def botinfo(self, ctx):
         await ctx.send(self.bot.appinfo.owner)
 
 
-    @commands.command(aliases=['qr'], help='Generator qrcode.')
+    @commands.command(aliases=['qr'], help='Qrcode generator .')
     async def qrcode(self, ctx, *, url):
         try:
-            arr = io.BytesIO() # กำหนดใหเ้ตัวแปร f แทน BytesIO เป็นค่าว่าง
-            q = qrcode.make(url) # เวลาเรียกใช้งาน StringIO ใน Python สามารถใช้งานได้เหมือนไฟล์ที่ดึงเข้ามาใน Python ครับ
-            q.save(arr, format="PNG")  #บันทึกค่า QR Code เข้าไปยังไฟล์โดยรูปแบบไฟล์ PNG
-            arr.seek(0) #set ค่าให้เริ่มที่ 0 
+            q = qrcode.make(url)
+            arr = io.BytesIO()
+            q.save(arr, format="PNG")
+            arr.seek(0)
             await ctx.send(file=discord.File(fp=arr, filename="image.png"))
-        except:
-            ctx.send('error ☠️')
+        except Exception as er:
+            print(er)
 
 
     @commands.command(aliases=['t', 'tsl'], help='Translate to Thai')
@@ -169,9 +171,15 @@ class Userful(commands.Cog, name='Useful commands'):
         embed.set_footer(text=f'cr.code design by : LuckyToT#1251')
 
         await ctx.send(embed=embed)
-
-
-
+    
+    @commands.command(help='Short url generator')
+    async def shorturl(self, ctx, *, url):
+        try:
+            short = pyshorteners.Shortener(api_key='8a3dd0b5d316c0d888b0030dfbb4c8ceeaa3a3e0')
+            short_url = short.bitly.short(url)
+            await ctx.reply(short_url)
+        except:
+            pass
 
 def setup(bot):
     bot.add_cog(Userful(bot))

@@ -10,7 +10,7 @@ class AdminCommand(commands.Cog, name='Admin commands'):
     @commands.Cog.listener()
     async def on_message_delete(self, message):
 
-        channel = self.bot.get_channel(903305616448159774)
+        channel = self.bot.get_channel(912001523016400936)
 
         if message.author.bot:
             return
@@ -23,7 +23,6 @@ class AdminCommand(commands.Cog, name='Admin commands'):
             color=0xbf0404,
         )
         embed.set_author(name = f"{message.author}", icon_url=f"{message.author.avatar_url}")
-
         for attachment  in message.attachments:
             if 'image' in attachment.content_type:
                 embed.set_image(url=attachment.proxy_url)

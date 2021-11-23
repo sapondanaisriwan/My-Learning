@@ -1,6 +1,9 @@
+import random
 from datetime import datetime
 
 import discord
+import requests
+from bs4 import BeautifulSoup
 from discord.ext import commands
 from waifu import WaifuAioClient
 
@@ -70,6 +73,22 @@ class Lewd_Commands(commands.Cog, name='Lewd commands'):
         embed.timestamp = datetime.utcnow()
 
         await ctx.send(embed=embed)
+
+    @commands.command()
+    async def nhentai(self, ctx):
+        url = 'https://nhentai.to/random/'
+        web_data = requests.get(url)
+        soup = BeautifulSoup(web_data.text, 'html.parser')
+        find_word = soup.find_all('img')
+        test = []
+        for i in find_word:
+            i = i.get('src')
+            if i is not None:
+                print(i)
+                test.append(i)
+        random_doujin = random.choice(test)
+        print(random_doujin)
+        await ctx.send(random_doujin)
 
 def setup(bot):
     bot.add_cog(Lewd_Commands(bot))
