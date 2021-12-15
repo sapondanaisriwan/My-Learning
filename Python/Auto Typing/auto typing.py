@@ -1,8 +1,10 @@
 
-from selenium import webdriver
 import time
+
+from selenium import webdriver
+
 browser = webdriver.Edge('msedgedriver.exe')
-browser.implicitly_wait(10)
+browser.implicitly_wait(15)
 
 url = 'https://10fastfingers.com/typing-test/english'
 browser.get(url)
@@ -14,4 +16,4 @@ while True:
     text = browser.find_element_by_class_name('highlight').text + ' '
     text_box = browser.find_element_by_xpath('//*[@id="inputfield"]')
     text_box.send_keys(text)
-    time.sleep(0.01)
+    time.sleep(0.1)

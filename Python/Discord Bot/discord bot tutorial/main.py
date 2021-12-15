@@ -105,7 +105,7 @@ def main():
             bot.load_extension(f'cogs.{filename[:-3]}')
 
 if __name__ == '__main__':
-    main()    
+    main()
 
 bot.run(TOKEN)
 
