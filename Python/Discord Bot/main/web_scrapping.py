@@ -4,6 +4,7 @@ import time
 
 import aiohttp
 import pandas as pd
+from bs4 import BeautifulSoup
 
 # from random_proxies import Random_Proxy
 
@@ -11,15 +12,16 @@ import pandas as pd
 start_time = time.perf_counter()
 
 
-async def main(url):
+async def main(url='https://api.bilibili.tv/intl/gateway/web/v2/ogv/index/items'):
     async with aiohttp.ClientSession(trust_env=True) as session:
         tasks = []
         page_number = 1
         for page_number in range(1, 31):
             task = asyncio.create_task(
-                get_data_json(session, url, page_number))   
+                get_data_json(session, url, page_number))
             tasks.append(task)
         data = await asyncio.gather(*tasks)
+
     with open('raw_data.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
@@ -38,8 +40,8 @@ async def main(url):
     with open('clean_data.json', 'w', encoding='utf-8') as f:
         json.dump(case_list, f, ensure_ascii=False, indent=4)
 
-    df_json = pd.read_json('clean_data.json')
-    df_json.to_excel('Aasdfnime_list.xlsx')
+    # df_json = pd.read_json('clean_data.json')
+    # df_json.to_excel('Aasdfnime_list.xlsx')
 
 
 async def get_data_json(session, url, page_number):
@@ -63,11 +65,11 @@ async def get_data_json(session, url, page_number):
         return response['data']['cards']
 
 
-def real_main(url):
+def real_main(url='https://api.bilibili.tv/intl/gateway/web/v2/ogv/index/items'):
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(main(url))
+    # await main(url)
     print("--- %s seconds ---" % (time.perf_counter() - start_time))
 
 
-if __name__ == "__main__":
-    real_main('https://api.bilibili.tv/intl/gateway/web/v2/ogv/index/items')
+# if __name__ == "__main__":
+#     real_main('https://api.bilibili.tv/intl/gateway/web/v2/ogv/index/items')

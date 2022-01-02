@@ -24,7 +24,10 @@ from sys import prefix
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
+
+import web_scrapping
 from customhelp import CustomHelpCommand
+
 
 def get_prefix(bot, message):
     with open('prefixes.json', 'r') as f:
@@ -32,11 +35,14 @@ def get_prefix(bot, message):
 
     return prefixes[str(message.guild.id)]
 
+
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
 
 intents = discord.Intents().all()
-bot = commands.Bot(command_prefix = get_prefix, help_command = CustomHelpCommand(), intents = intents, case_insensitive=True)
+bot = commands.Bot(command_prefix=get_prefix, help_command=CustomHelpCommand(
+), intents=intents, case_insensitive=True)
+
 
 @bot.event
 async def on_ready():
@@ -44,6 +50,7 @@ async def on_ready():
     if not hasattr(bot, 'appinfo'):
         bot.appinfo = await bot.application_info()
     await bot.change_presence(status=discord.Status.idle, activity=discord.Game("with you mom"))
+
 
 @bot.event
 async def on_guild_join(guild):
@@ -53,7 +60,8 @@ async def on_guild_join(guild):
     prefixes[str(guild.id)] = '.'
 
     with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent = 4)
+        json.dump(prefixes, f, indent=4)
+
 
 @bot.event
 async def on_guild_remove(guild):
@@ -63,7 +71,7 @@ async def on_guild_remove(guild):
     prefixes.pop(str(guild.id))
 
     with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent= 4 )
+        json.dump(prefixes, f, indent=4)
 
 
 @commands.has_permissions(administrator=True)
@@ -75,37 +83,39 @@ async def change_prefix(ctx, prefix):
     prefixes[str(ctx.guild.id)] = prefix
 
     with open('prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent= 4 )
+        json.dump(prefixes, f, indent=4)
 
 
 @commands.is_owner()
-@bot.command(show_hidden = True)
+@bot.command(show_hidden=True)
 async def load(ctx, extension):
     bot.load_extension(f'cogs.{extension}')
     await ctx.message.add_reaction('👌')
 
 
 @commands.is_owner()
-@bot.command(show_hidden = True)
+@bot.command(show_hidden=True)
 async def unload(ctx, extension):
     bot.unload_extension(f'cogs.{extension}')
     await ctx.message.add_reaction('👌')
 
+
 @commands.is_owner()
-@bot.command(show_hidden = True)
+@bot.command(show_hidden=True)
 async def reload(ctx, extension):
     bot.unload_extension(f'cogs.{extension}')
     bot.load_extension(f'cogs.{extension}')
     await ctx.message.add_reaction('👌')
 
+
 def main():
     notLoad = ['error handing.py']
     for filename in os.listdir('./cogs'):
-        if (filename.endswith('.py')): #and (filename not in notLoad):
+        if (filename.endswith('.py')):  # and (filename not in notLoad):
             bot.load_extension(f'cogs.{filename[:-3]}')
+
 
 if __name__ == '__main__':
     main()
 
 bot.run(TOKEN)
-
