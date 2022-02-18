@@ -21,14 +21,15 @@ class Anime(commands.Cog, name='Anime notification'):
             data = f.read()
             toJson = json.loads(data)
         embed = discord.Embed(
-            title = f"**Anime Updated**"
+            title=f"**Anime Updated**"
             # description = f"**Just Updated**",
         )
         print('here')
         animeQueue = 1
         for v in toJson:
             if v['status'].startswith('อัปเดต'):
-                newEP = " New EP:" + str(int(re.search(r'\d+', v['status']).group()))
+                newEP = " New EP:" + \
+                    str(int(re.search(r'\d+', v['status']).group()))
                 embed.description += f"\n{animeQueue}). [{v['title'] + newEP}]({v['url']})"
                 animeQueue += 1
                 # embed.description += f"{v['status']}"

@@ -25,7 +25,7 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 
-import web_scrapping
+# import web_scrapping
 from customhelp import CustomHelpCommand
 
 
@@ -109,10 +109,12 @@ async def reload(ctx, extension):
 
 
 def main():
-    notLoad = ['error handing.py']
+    notLoad = ['error handing', 'anime']
     for filename in os.listdir('./cogs'):
         if (filename.endswith('.py')):  # and (filename not in notLoad):
-            bot.load_extension(f'cogs.{filename[:-3]}')
+            if filename != "error handing.py" and filename != "anime.py":
+                print(filename)
+                bot.load_extension(f'cogs.{filename[:-3]}')
 
 
 if __name__ == '__main__':

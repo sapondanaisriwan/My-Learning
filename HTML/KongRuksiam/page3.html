@@ -1,12 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <h1>Page 3</h1>
-</body>
+  </head>
+
+  <!--
+    thead = table head หัวตาราง
+    tr = table row แถวตาราง
+    th = table head
+-->
+
+  <body>
+    <h1>รายการสินค้า</h1>
+    <!-- 
+      border="ความหนา"
+      width = "%"
+      colspan="เชื่อม cell"
+      cellpadding = ขยายตารางในส่วนข้อมูล
+      cellspacing = เพิ่มความหนาเส้น
+    -->
+    <table border="1" cellpadding="5" cellspacing="5">
+      <thead bgcolor="lightblue">
+        <th>รหัสสินค้า</th>
+        <th>ภาพสินค้า</th>
+        <th>ชื่อสินค้า</th>
+        <th>ราคา</th>
+        <th>ดำเนินการสินค้า</th>
+      </thead>
+      <tbody>
+        <tr bgcolor="pink" align="center">
+          <td>P001</td>
+          <td>
+            <img
+              src="https://www.posttoday.com/media/content/2018/10/09/7E68135B4E03435881B219B331FB9169.jpg"
+              alt=""
+              height="150px"
+              width="200px"
+            />
+          </td>
+          <td bgcolor="green">ส้มตำ</td>
+          <td>150.00</td>
+          <td rowspan="2"><a href="#">สั่งซื้อ</a></td>
+        </tr>
+        <tr bgcolor="yellow" align="center">
+          <td>P002</td>
+          <td>
+            <img
+              src="https://www.uncledeng.com/wp-content/uploads/2017/07/28-700x460.jpg"
+              alt=""
+              height="150px"
+              width="200px"
+            />
+          </td>
+          <td>Steak</td>
+          <td>1500 พี่ว่าไง</td>
+        </tr>
+      </tbody>
+      <!-- foot = ตีน = เพิ่มตารางไว้ที่ท้ายตาราง -->
+      <tfoot>
+        <tr>
+          <td colspan="3">ราคารวม: 500</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+    <!-- span = การจัดกลุ่มพวกข้อความ (ไม่ขึ้น)บรรทัดใหม่-->
+    <span style="color: red"> LuckyToT </span>
+    <span style="color: red"> LuckyToT </span>
+    <span style="color: red"> LuckyToT </span>
+
+    <!-- div = การจัดกลุ่มพวกข้อความ  (ขึ้น)บรรทัดใหม่-->
+    <div style="color: rgb(0, 241, 161)">LuckyToT</div>
+    <div style="color: rgb(0, 241, 161)">LuckyToT</div>
+    <div style="color: rgb(0, 241, 161)">LuckyToT</div>
+  </body>
 </html>
