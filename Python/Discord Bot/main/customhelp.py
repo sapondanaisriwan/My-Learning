@@ -20,7 +20,7 @@ class CustomHelpCommand(commands.MinimalHelpCommand):
         )
         embed.set_author(
             name=f"| Command lists",
-            icon_url=ctx.author.avatar_url
+            icon_url=ctx.author.display_avatar
         )
         embed.set_footer(
             text=f"Use `{prefix[str(ctx.guild.id)]}help <CommandName>` to get more information about a command.",

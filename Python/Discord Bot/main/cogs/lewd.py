@@ -9,6 +9,7 @@ from waifu import WaifuAioClient
 
 waifu = WaifuAioClient()
 
+
 class Lewd_Commands(commands.Cog, name='Lewd commands'):
 
     def __init__(self, bot):
@@ -22,8 +23,8 @@ class Lewd_Commands(commands.Cog, name='Lewd commands'):
         embed = discord.Embed(color=discord.Color.red())
         embed.set_image(url=nsfw_lewdwaifu)
         embed.set_footer(
-            text = f'{ctx.author}',
-            icon_url = f"{ctx.author.avatar_url}"
+            text=f'{ctx.author}',
+            icon_url=f"{ctx.author.display_avatar}"
         )
         embed.timestamp = datetime.utcnow()
 
@@ -37,8 +38,8 @@ class Lewd_Commands(commands.Cog, name='Lewd commands'):
         embed = discord.Embed(color=discord.Color.red())
         embed.set_image(url=nsfw_neko)
         embed.set_footer(
-            text = f'{ctx.author}',
-            icon_url = f"{ctx.author.avatar_url}"
+            text=f'{ctx.author}',
+            icon_url=f"{ctx.author.display_avatar}"
         )
         embed.timestamp = datetime.utcnow()
 
@@ -52,8 +53,8 @@ class Lewd_Commands(commands.Cog, name='Lewd commands'):
         embed = discord.Embed(color=discord.Color.red())
         embed.set_image(url=nsfw_blowjob)
         embed.set_footer(
-            text = f'{ctx.author}',
-            icon_url = f"{ctx.author.avatar_url}"
+            text=f'{ctx.author}',
+            icon_url=f"{ctx.author.display_avatar}"
         )
         embed.timestamp = datetime.utcnow()
 
@@ -67,8 +68,8 @@ class Lewd_Commands(commands.Cog, name='Lewd commands'):
         embed = discord.Embed(color=discord.Color.red())
         embed.set_image(url=nsfw_trap)
         embed.set_footer(
-            text = f'{ctx.author}',
-            icon_url = f"{ctx.author.avatar_url}"
+            text=f'{ctx.author}',
+            icon_url=f"{ctx.author.display_avatar}"
         )
         embed.timestamp = datetime.utcnow()
 
@@ -89,6 +90,7 @@ class Lewd_Commands(commands.Cog, name='Lewd commands'):
         random_doujin = random.choice(test)
         print(random_doujin)
         await ctx.send(random_doujin)
+
 
 def setup(bot):
     bot.add_cog(Lewd_Commands(bot))

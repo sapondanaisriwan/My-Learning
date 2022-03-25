@@ -71,7 +71,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         emBed.add_field(name='Duration', value=str(
             timedelta(seconds=data['duration'])), inline=True)
         emBed.set_author(name='Added to queue',
-                         icon_url=ctx.message.author.avatar_url)
+                         icon_url=ctx.message.author.display_avatar)
 
         # await ctx.send(embed=emBed, delete_after=15)
         await ctx.send(embed=emBed)
@@ -150,7 +150,8 @@ class MusicPlayer:
             source.volume = self.volume
             self.current = source
 
-            self._guild.voice_client.play(source, after=lambda _: self.bot.loop.call_soon_threadsafe(self.next.set))
+            self._guild.voice_client.play(
+                source, after=lambda _: self.bot.loop.call_soon_threadsafe(self.next.set))
             await self.next.wait()
 
             # Make sure the FFmpeg process is cleaned up.
@@ -174,7 +175,6 @@ class MusicPlayer:
             print('error')
 
 
-
 players = {}
 
 
@@ -191,7 +191,7 @@ class Music_Commands(commands.Cog, name='Music commands'):
 
     def __init__(self, bot):
         self.bot = bot
-    
+
     @commands.command(name='play', aliases=['p'], help='Plays an audio resource right in your voice channel.')
     async def _play(self, ctx, *, search: str):  # ctx = คนใช้คำสั่ง/ผู้ใช้
 
@@ -202,7 +202,7 @@ class Music_Commands(commands.Cog, name='Music commands'):
         if ctx.author.voice == None:
             emBed.set_author(
                 name=" | You're not in a voice channel",
-                icon_url=ctx.message.author.avatar_url
+                icon_url=ctx.message.author.display_avatar
             )
             return await ctx.send(embed=emBed)
 
@@ -218,18 +218,17 @@ class Music_Commands(commands.Cog, name='Music commands'):
 
         await _player.queue.put(source)
 
-
     """Pause music"""
 
     @commands.command(help='Pauses the music playback if playing')
     async def pause(self, ctx):
-    
+
         voice_client = get(self.bot.voice_clients, guild=ctx.guild)
         if ctx.author.voice == None:  # if user not in the vc
             emBed = discord.Embed(color=0xff0000)
             emBed.set_author(
                 name=" | You're not in a voice channel",
-                icon_url=ctx.message.author.avatar_url
+                icon_url=ctx.message.author.display_avatar
             )
             return await ctx.send(embed=emBed)
 
@@ -237,7 +236,7 @@ class Music_Commands(commands.Cog, name='Music commands'):
             emBed = discord.Embed(color=0xff0000)
             emBed.set_author(
                 name=" | There is nothing playing on this guild",
-                icon_url=self.bot.user.avatar_url
+                icon_url=self.bot.user.display_avatar
             )
             return await ctx.send(embed=emBed)
 
@@ -249,24 +248,23 @@ class Music_Commands(commands.Cog, name='Music commands'):
         await ctx.send(embed=emBed)
         voice_client.pause()
 
-
     @commands.command(help='Resumes the music playback if paused')
     async def resume(self, ctx):
-        
+
         emBed = discord.Embed(color=0xff0000)
         voice_client = get(self.bot.voice_clients, guild=ctx.guild)
 
         if ctx.author.voice == None:  # if user not in the vc
             emBed.set_author(
                 name=" | You're not in a voice channel",
-                icon_url=ctx.message.author.avatar_url
+                icon_url=ctx.message.author.display_avatar
             )
             return await ctx.send(embed=emBed)
 
         if voice_client == None:
             emBed.set_author(
                 name=" | Bot is not connected to voice channel yet",
-                icon_url=self.bot.user.avatar_url
+                icon_url=self.bot.user.display_avatar
             )
             return await ctx.send(embed=emBed)
 
@@ -281,7 +279,6 @@ class Music_Commands(commands.Cog, name='Music commands'):
         await ctx.send(embed=emBed)
         voice_client.resume()
 
-
     @commands.command(name='leave', aliases=['stop', 'dis', 'disconnect'])
     async def _leave(self, ctx):
 
@@ -290,17 +287,17 @@ class Music_Commands(commands.Cog, name='Music commands'):
 
         if ctx.author.voice == None:  # if user not in the vc
             emBed.set_author(
-                name = " | You're not in the voice channel",
-                icon_url = ctx.message.author.avatar_url
+                name=" | You're not in the voice channel",
+                icon_url=ctx.message.author.display_avatar
             )
             return await ctx.send(embed=emBed)
 
-        if voice_client == None: # bot ไม่อยู่ใน vc
+        if voice_client == None:  # bot ไม่อยู่ใน vc
             emBed.set_author(
-                name = " | There's nothing playing in this server",
-                icon_url = self.bot.user.avatar_url
+                name=" | There's nothing playing in this server",
+                icon_url=self.bot.user.display_avatar
             )
-            return await ctx.send(embed=emBed) 
+            return await ctx.send(embed=emBed)
 
         if voice_client.channel != ctx.author.voice.channel:  # ห้องของบอทไมไ่ด้อยู่ห้องเดียวกับผู้ใช้
             return await ctx.send(f" ❌ **| You're not in the same voice channel with me. Please join** <#{voice_client.channel.id}>")
@@ -310,7 +307,6 @@ class Music_Commands(commands.Cog, name='Music commands'):
             await ctx.voice_client.disconnect()
             await ctx.message.add_reaction('👌')
 
-
     @commands.command(name='queue', aliases=['q'], help='Shows the queued songs in this server')
     async def _queueList(self, ctx):
 
@@ -319,15 +315,15 @@ class Music_Commands(commands.Cog, name='Music commands'):
 
         if ctx.author.voice == None:  # if user not in the vc
             emBed.set_author(
-                name = " | You're not in a voice channel",
-                icon_url = ctx.message.author.avatar_url
+                name=" | You're not in a voice channel",
+                icon_url=ctx.message.author.display_avatar
             )
             return await ctx.send(embed=emBed)
 
         if voice_client == None:
             emBed.set_author(
-                name = " | Bot is not connected to voice channel yet",
-                icon_url=self.bot.user.avatar_url
+                name=" | Bot is not connected to voice channel yet",
+                icon_url=self.bot.user.display_avatar
             )
             return await ctx.send(embed=emBed)
 
@@ -339,7 +335,8 @@ class Music_Commands(commands.Cog, name='Music commands'):
             return await ctx.send("❌ **| There's no song in the queue**")
 
         # 1 2 3
-        upcoming = list(itertools.islice(player.queue._queue, 0, player.queue.qsize()))
+        upcoming = list(itertools.islice(
+            player.queue._queue, 0, player.queue.qsize()))
         embed = discord.Embed(
             title=f"**Queue for {ctx.guild}**",
             description=f"**Next Coming**",
@@ -352,7 +349,6 @@ class Music_Commands(commands.Cog, name='Music commands'):
 
         await ctx.send(embed=embed)
 
-
     @commands.command(name='skip', aliases=['s'], help='Skips the current playing song in track or skips the number of songs you specified in track.')
     async def _skip(self, ctx):
 
@@ -362,14 +358,14 @@ class Music_Commands(commands.Cog, name='Music commands'):
         if ctx.author.voice == None:  # if user not in the vc
             emBed.set_author(
                 name=" | You're not in a voice channel",
-                icon_url=ctx.message.author.avatar_url
+                icon_url=ctx.message.author.display_avatar
             )
             return await ctx.send(embed=emBed)
 
         if voice_client == None:  # if the
             emBed.set_author(
                 name=" | Bot is not connected to voice channel yet",
-                icon_url=self.bot.user.avatar_url
+                icon_url=self.bot.user.display_avatar
             )
             return await ctx.send(embed=emBed)
 
