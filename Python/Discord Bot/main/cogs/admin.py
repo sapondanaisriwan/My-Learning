@@ -32,10 +32,9 @@ class AdminCommand(commands.Cog, name='Admin commands'):
 
         await channel.send(embed=embed)
 
-    @commands.command(help="Change member's name that you mention")
+    @commands.command(pass_context=True, help="Change member's name that you mention")
     @commands.has_permissions(manage_nicknames=True)
     async def nick(self, ctx, member: discord.Member, *, nickname):
-
         if ctx.author.bot:
             return
 

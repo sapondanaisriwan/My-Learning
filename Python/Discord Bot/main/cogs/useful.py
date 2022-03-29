@@ -3,6 +3,7 @@ from datetime import datetime
 from logging import error
 
 import discord
+from numpy import append
 import pyshorteners
 import qrcode
 from discord.ext import commands
@@ -14,10 +15,41 @@ class Userful(commands.Cog, name='Useful commands'):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(name='serverinfo', aliases=['guildinfo'], help='Gets the info of the server where this command is invoked.')
+    @commands.command(name='members', aliases=['getuser'], help='Gets the info of the server where this command is invoked.')
     @commands.has_permissions(manage_guild=True)
+    async def get_members(self, ctx):
+        # await ctx.send(file=discord.File(io.BytesIO("meme"), filename="meme.txt"))
+
+        if ctx.author.bot:
+            return
+
+        for member in ctx.guild.members:
+            if str(member.nick).lower().replace(' ', '') == 'noname':
+                # await member.edit(nick="឵឵ No Name")
+                embed = discord.Embed(
+                    description=f'Nickname was changed to {member.mention}.'
+                )
+                await member.edit(nick="឵឵ No Name")
+                await ctx.send(embed=embed)
+
+        # embed = discord.Embed(
+        #     description=f'Nickname was changed to {member.mention}.'
+        # )
+
+        # await member.edit(nick="឵឵ No Name")
+        # await ctx.send(embed=embed)
+
+        # with open("result.txt", "w") as file:
+        #     file.write(str(members))
+        # await ctx.send(file=discord.File(io.BytesIO("meme"), filename="meme.txt"))
+        # # send file to Discord in message
+        # with open("result.txt", "rb") as file:
+        #     await ctx.send("Your file is:", file=discord.File(file, "result.txt"))
+
+    @ commands.command(name='serverinfo', aliases=['guildinfo'], help='Gets the info of the server where this command is invoked.')
+    @ commands.has_permissions(manage_guild=True)
     async def server_info(self, ctx):
-        guild = ctx.guild
+        guild = ctx.guilds
 
         embed = discord.Embed(
             title=":gear: Server Information",
@@ -60,7 +92,7 @@ class Userful(commands.Cog, name='Useful commands'):
         )
         await ctx.send(embed=embed)
 
-    @commands.command(help='Gets the info of the user that you mention')
+    @ commands.command(help='Gets the info of the user that you mention')
     async def userinfo(self, ctx, member: discord.Member):
         roles = [role for role in member.roles]
 
@@ -103,8 +135,8 @@ class Userful(commands.Cog, name='Useful commands'):
 
         await ctx.send(embed=embed)
 
-    @commands.command(help='Let you clear the messages')
-    @commands.cooldown(1, 5, commands.BucketType.user)
+    @ commands.command(help='Let you clear the messages')
+    @ commands.cooldown(1, 5, commands.BucketType.user)
     async def clear(self, ctx, amount: int):
 
         if ctx.author.bot:
@@ -112,7 +144,7 @@ class Userful(commands.Cog, name='Useful commands'):
 
         await ctx.channel.purge(limit=amount + 1)
 
-    @commands.command(name='change', help='Convert message written in ENG to TH.')
+    @ commands.command(name='change', help='Convert message written in ENG to TH.')
     async def change_Language(self, ctx, *, message):
 
         if ctx.author.bot:
@@ -128,11 +160,11 @@ class Userful(commands.Cog, name='Useful commands'):
             message = message.replace(wordEN, wordTH)
         await ctx.reply(message)
 
-    @commands.command()
+    @ commands.command()
     async def botinfo(self, ctx):
         await ctx.send(self.bot.appinfo.owner)
 
-    @commands.command(aliases=['qr'], help='Qrcode generator .')
+    @ commands.command(aliases=['qr'], help='Qrcode generator .')
     async def qrcode(self, ctx, *, url):
         try:
             q = qrcode.make(url)
@@ -143,7 +175,7 @@ class Userful(commands.Cog, name='Useful commands'):
         except Exception as er:
             print(er)
 
-    @commands.command(aliases=['t', 'tsl'], help='Translate to Thai')
+    @ commands.command(aliases=['t', 'tsl'], help='Translate to Thai')
     async def translate(self, ctx, *, message):
 
         translator = Translator()
@@ -168,7 +200,7 @@ class Userful(commands.Cog, name='Useful commands'):
 
         await ctx.send(embed=embed)
 
-    @commands.command(help='Short url generator')
+    @ commands.command(help='Short url generator')
     async def shorturl(self, ctx, *, url):
         try:
             short = pyshorteners.Shortener(

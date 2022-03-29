@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+
+    <title>HTML FORM</title>
+  </head>
+  <body>
+    <h1>Contact Us</h1>
+    <form action="/" method="GET">
+      <h2>How can we help you?</h2>
+      <label for="user_name">Your name</label>
+      <input type="text" name="user-name" id="user_name" />
+
+      <label for="user_email">Your E-Mail Address</label>
+      <input type="email" name="user-email" id="user_email" />
+
+      <label for="user_phone_number">Your Phone Number</label>
+      <input type="number" name="user-phone-number" id="user_phone_number" />
+
+      <label for="user_message">Your Message</label>
+      <textarea id="user_message"></textarea>
+
+      <label for="">How did you find us?</label>
+      <select name="" id="">
+        Web Search
+      </select>
+      <h2>How should we reply?</h2>
+      <div class="form-control-inline">
+        <input type="radio" name="reply" id="call_me" value="call" />
+        <label for="call_me">Call me</label>
+      </div>
+      <div class="form-control-inline">
+        <input type="radio" name="reply" id="send_email" value="email" />
+        <label for="send_email">Send me an email</label>
+      </div>
+      <div class="form-control-inline">
+        <input type="radio" name="reply" id="dont_reply" value="dont" />
+        <label for="dont_reply">Don't reply</label>
+      </div>
+
+        <button>Submit</button>
+      </div>
+    </form>
+  </body>
+</html>
